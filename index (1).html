@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Syntax Corrector</title>
+    <title>Code Summarizer & Analyzer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -52,7 +52,7 @@
         }
 
         form:hover {
-            transform: scale(1.03); 
+            transform: scale(1.03);
         }
 
         textarea {
@@ -124,19 +124,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Code Syntax Corrector</h1>
-        <p>Enter your code below and click "Correct" to get a corrected version of your code along with a syntax analysis.</p>
+        <h1>Code Summarizer & Analyzer</h1>
+        <p>Enter your code below and click "Summarize & Analyze" to get both a summary and analysis of your code's structure.</p>
         <form id="codeForm">
             <textarea name="code" rows="10" cols="50" placeholder="Enter your code here..."></textarea><br>
-            <button type="submit">Correct</button>
+            <button type="submit">Summarize & Analyze</button>
         </form>
-        <h2>Corrected Code:</h2>
-        <pre id="correctedCode"></pre>
-        <h2>Syntax Analysis:</h2>
+        <h2>Summary:</h2>
+        <pre id="summaryOutput"></pre>
+        <h2>Analysis:</h2>
         <pre id="analysisOutput"></pre>
 
         <footer>
-            &copy; 2024 Code Syntax Corrector.
+            &copy; 2024 Code Summarizer & Analyzer.
         </footer>
     </div>
 
@@ -146,7 +146,7 @@
             const formData = new FormData(this);
             const code = formData.get("code");
 
-            fetch("http://127.0.0.1:5000/correct", {
+            fetch("http://127.0.0.1:5000/summarize", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -155,11 +155,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById("correctedCode").textContent = data.corrected_code || data.error;
-                document.getElementById("analysisOutput").textContent = data.analysis || "";
+                document.getElementById("summaryOutput").textContent = data.summary || data.error;
+                document.getElementById("analysisOutput").textContent = data.analysis || data.error;
             })
             .catch(error => {
-                document.getElementById("correctedCode").textContent = "Error: " + error;
+                document.getElementById("summaryOutput").textContent = "Error: " + error;
                 document.getElementById("analysisOutput").textContent = "";
             });
         };
